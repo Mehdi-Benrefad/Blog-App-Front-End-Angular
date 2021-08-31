@@ -1,0 +1,128 @@
+-----------------------------------------------------------------------------------------------------------------------
+Set Up Frontend and verify Connection to NestJs
+-----------------------------------------------------------------------------------------------------------------------
+1- add Angular Material: [ng add @angular/material]
+2- Dans app.modules > Imports:
+    on ajoute "MatToolbarModule".
+3- On customise le contenu html et le style Scss de notre "component" principal.
+4- On cree la route vers Admin [ng g m admin --routing]
+5- On genere un composant [ng g c admin]
+6- On cree nos composants.
+    [ng g c components/register]
+7- on modifie dans "app-routing.module.ts" et dans "admin-routing.module.ts" pour configurer le routage vers admin.
+8- [ng g c admin/components/overview]
+9= [ng g c components/login]
+10- On cree le service d'authentication: [ng g s services/authentication]
+11- [npm i --save rxjs]
+12- On configure notre service d'authetication en ajoutant la methode Login.
+13- On ajoute HttpClientModule dans lre fichier "app.modules.ts"
+14- On ajoute un prefixe pour communiquer avec l'API du backend.
+    14-1- On cree un fichier"proxy.config.json" Dans le fichier Front-End
+    14-2- Dans le fichier "main.ts" de l'API du backend on definit le prefix global de l'application.
+    14-3- Dans Angular.Json on ajoute la configuration du config dans seve.
+    14-4- On modifie dans package.json ["start": "ng serve --proxy-config proxy.conf.json"]
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Reactive Forms Login + Register
+-------------------------------------------------------------------------------------------------------------------------
+
+1- Dans "app.module.ts" on ajoute ces imports
+    [
+        FormsModule,
+        ReactiveFormsModule
+    ]
+
+2- On importe les composants angular material pour le formulaire dans le fichier "app.modules.ts"
+    [import {MatFormFieldModule} from '@angular/material/form-field';
+    import {MatButtonModule, MatButton} from '@angular/material/button';
+    import {MatInputModule} from '@angular/material/input';
+    ]
+
+    et puis on les rajoute dans la section Imports.
+
+3- Puis on construit notre composant login qu'on a cree avant, et on le formalise a notre besoin.
+
+
+4- On refait la meme chose pour le formulaire Register.
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Side Pagination
+-------------------------------------------------------------------------------------------------------------------------
+1- Dans appModule on ajoute les importations suivantes:
+    [
+        MatSelectModule,
+        MatTableModule,
+        MatPaginatorModule
+    ]
+
+2- On customise le template en utilisant les composants material Angular.
+
+3- On cree un userService. [ng g s services/user]
+
+4- Dans userService on cree une interface qui va nous permettre de recuperer les donnees et leurs lieins de pagination.
+
+    [
+        export interface UserData {
+        items: User[],
+        meta: {
+            totalItems: number;
+            itemCount: number;
+            itemsPerPage: number;
+            totalPages: number;
+            currentPage: number;
+        },
+        links: {
+            first: string;
+            previous: string;
+            next: string;
+            last: string;
+        }
+        };
+    ]
+
+
+5- On cree le composant users. [ng g c components/users], on l'implemente puis on lui rajoute une route.
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Added filtering by username and with pagination.
+-------------------------------------------------------------------------------------------------------------------------
+1- Dans userService on ajoute une methode "paginateByUsername()".
+2- On ajoute un input de recherche dans le template ".html"
+3- On ajoute une variable filter value dans le fichier typescript du component, puis on ajoute dans le meme fichier un
+  methode "findByName".
+4- on modifie aussi la fonction "onPaginateChange()" en lui ajoutant une condition.
+
+
+-------------------------------------------------------------------------------------------------------------------------
+User Profile Component:
+-------------------------------------------------------------------------------------------------------------------------
+1- [ng g c components/user-profile]
+2- on ajoute le chemin vers la page qui va contenir le composant dans le fichier "app-routing.module.ts"
+  il va etre un fils de user
+3- Dans uer service on ajoute la methode "findOne()"
+4- On ajoute matCardModule dans "app.module.ts"
+5- on implemente notre composant.
+6- On modifie user dan "authenticationService"
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Update User Profile Component:
+-------------------------------------------------------------------------------------------------------------------------
+1- [ng g c components/update-user-profile]
+2- on ajoute le chemin vers la page qui va contenir le composant dans le fichier "app-routing.module.ts"
+3- Dans le dossier app on cree un dossier guards
+4- Dans le dossier app on cree un dossier interceptors
+5- [ng g guard guards/auth]
+6- dans auth service on ajoute une methode "isAuthenticated()"
+7- [npm install @auth0/angular-jwt]
+8- On modifie dans le fichier auth.guard,ts selon nos besoins.
+9- appmodule > providers > "JwtHelperService"
+10- [ng g interceptor interceptors/jwt]
+5- on implemente notre composant.
+6- On modifie user dan "authenticationService"
