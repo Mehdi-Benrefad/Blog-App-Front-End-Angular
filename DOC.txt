@@ -126,3 +126,12 @@ Update User Profile Component:
 10- [ng g interceptor interceptors/jwt]
 5- on implemente notre composant.
 6- On modifie user dan "authenticationService"
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Update Image Profile:
+-------------------------------------------------------------------------------------------------------------------------
+1- On importe [MatProgressBarModule] et [MatIconModule] dans "app.module.ts".
+2- on ajoute a "update-user-profile.ts"  [@ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;].
+3- On exporte une interface file dans le meme fichier, et on declare une instance de cette derniere.
+4- on implemente les methodes d'upload dans le service et dans le component typeScript et aussi le component html.

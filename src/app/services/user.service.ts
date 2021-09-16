@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { User } from '../authentication-service/authentication.service';
+
 import { map, catchError } from 'rxjs/operators';
+import { User } from './authentication.service';
 
 export interface UserData {
   items: User[],
@@ -12,7 +13,7 @@ export interface UserData {
     itemsPerPage: number;
     totalPages: number;
     currentPage: number;
-  }, 
+  },
   links: {
     first: string;
     previous: string;
@@ -62,4 +63,12 @@ export class UserService {
       catchError(err => throwError(err))
     )
   }
+
+  uploadProfileImage(formData: FormData): Observable<any> {
+    return this.http.post<FormData>('/api/users/upload', formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+  }
+
 }
